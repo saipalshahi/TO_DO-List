@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstname": "saipal",
+      "lastname": "shahi",
+      "username": "saipla10",
+      "email": "saipalmessi@gmail.com",
+      "password": "Babe#3564",
+      "confirmPassword": "Babe#3564"
+    },
+    {
+      "id": "2",
+      "firstname": "nabin",
+      "lastname": "rokaya",
+      "username": "nabin17",
+      "email": "nabin@gmail.com",
+      "password": "nabin#3564",
+      "confirmPassword": "nabin#3564"
+    },
+    {
+      "id": "3",
+      "firstname": "ram",
+      "lastname": "rokaya",
+      "username": "ram19",
+      "email": "ram@gmail.com",
+      "password": "ram#3564",
+      "confirmPassword": "ram#3564"
+    },
+    {
+      "id": "0853",
+      "firstname": "abc",
+      "lastname": "abc",
+      "username": "abcs",
+      "email": "abc@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "d6e0",
+      "firstname": "abc",
+      "lastname": "abc",
+      "username": "abcs",
+      "email": "abc@gmail.com",
+      "password": "123456"
+    }
+  ]
+}
