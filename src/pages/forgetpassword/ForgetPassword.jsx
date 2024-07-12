@@ -8,12 +8,13 @@ const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  // submit function
+  //submit function
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // it helps to prevent reload when click login button
 
     if (email === "email") {
       toast.success("success");
+      localStorage.setItem("email", email);
     } else {
       toast.error("error");
     }
@@ -37,9 +38,7 @@ const ForgetPassword = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="form-control"
-                      id="email"
-                      placeholder="Enter your email"
-                      required
+                      placeholder="Email"
                     />
                   </div>
                   <button type="submit" className="btn btn-primary btn-block">

@@ -53,6 +53,8 @@ const RegistrationForm = () => {
         username: username,
         email: email,
         password: password,
+        confirmpassword: confirmpassword,
+        terms: terms,
       };
 
       registerApi(data).then((res) => {

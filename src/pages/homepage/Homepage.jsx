@@ -1,9 +1,10 @@
 // First: import - react
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { fetchUsers } from "../../api/Api";
+import { deleteUser, fetchUsers } from "../../api/Api";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../redux_storage/userSlice";
+import { Link } from "react-router-dom";
+import EditUserModal from "../../components/EditUserModal";
 
 // make a function (fileName)
 const Homepage = () => {
@@ -11,7 +12,7 @@ const Homepage = () => {
   const dispatch = useDispatch();
 
   // selector (select from storage)  -----> list of users
-  const users = useSelector((state) => state.users.users);
+  const users = useSelector((state) => state.users.users || []); // list of users in array format
 
   //automatic user fetch  {  useState}
   // []  is dependency list, when should it run
@@ -27,8 +28,42 @@ const Homepage = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, [dispatch]);
 
+  // for editing users
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // function for open and close
+  const handleOpenModal = (user) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
+  };
+
+  // delete user
+  const handleDelete = (id) => {
+    const comfirm = window.confirm("Are you sure want to delete ");
+    if (!comfirm) {
+      return;
+    }
+    // delete user
+    deleteUser(id)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          alert("User Deleted");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("server error");
+      });
+  };
   return (
     <>
       <table className="table">
@@ -43,47 +78,48 @@ const Homepage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>JohnDoe</td>
-            <td>john.doe@gmail.com</td>
-            <td>
-              <div className="btn-group ">
-                <button className="btn bg-success"> Edit</button>
-                <button className="btn bg-danger">Delete</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>JohnDoe</td>
-            <td>john.doe@gmail.com</td>
-            <td>
-              <div className="btn-group ">
-                <button className="btn bg-success"> Edit</button>
-                <button className="btn bg-danger">Delete</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>JohnDoe</td>
-            <td>john.doe@gmail.com</td>
-            <td>
-              <div className="btn-group ">
-                <button className="btn bg-success"> Edit</button>
-                <button className="btn bg-danger">Delete</button>
-              </div>
-            </td>
-          </tr>
+          {users.map((singleUser) => (
+            <tr>
+              <td>{singleUser.id}</td>
+              <td>{singleUser.firstname}</td>
+              <td>{singleUser.lastname}</td>
+              <td>{singleUser.username}</td>
+              <td>{singleUser.email}</td>
+              <td>
+                <div className="btn-group ">
+                  <button
+                    onClick={() => handleOpenModal(singleUser)}
+                    className="btn bg-success"
+                  >
+                    {" "}
+                    Edit
+                  </button>
+                  <button
+                    className="btn bg-danger"
+                    onClick={() => handleDelete(singleUser.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+
+      {/* if user click edit , then only show modal */}
+
+      {isModalOpen && (
+        <EditUserModal selectedUser={selectedUser} onClose={handleCloseModal} />
+      )}
+
+      <Link
+        className="bg-danger p-2 text-bg-light rounded-2"
+        style={{ textDecoration: "none" }}
+        to={"/login"}
+      >
+        Logout
+      </Link>
     </>
   );
 };
@@ -97,3 +133,11 @@ export default Homepage;
 //4. storage has data
 // 5. fetch from storage
 // 6. display in ui
+
+// mapping [{user1}, {user2}]
+// index: 0, 1, 2, 3, 4;
+
+//logic for edit data
+// data = table (row - button-> edit)
+// select that specific data
+//

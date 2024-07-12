@@ -6,6 +6,7 @@ import Register from "./pages/register/Register";
 
 import Navbar from "./components/Navbar";
 import ForgetPassword from "./pages/forgetpassword/ForgetPassword";
+import Search from "./pages/search/Search";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/aboutUs" element={<h1>About Us</h1>} />
         <Route path="forgetpassword" element={<ForgetPassword />} />
+        <Route path="search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );
